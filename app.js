@@ -3,15 +3,15 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebas
 import { getAuth, signInWithEmailAndPassword }
     from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
 
-// Paste YOUR config from the Firebase Console
-// YOU WILL NEED TO CHANGE THIS
+// Config from the Firebase Console
 const firebaseConfig = {
-    apiKey: "AIzaSy...",
-    authDomain: "sydney-events-xxxxx.firebaseapp.com",
-    projectId: "sydney-events-xxxxx",
-    storageBucket: "sydney-events-xxxxx.appspot.com",
-    messagingSenderId: "123456789",
-    appId: "1:123456789:web:abcdef"
+  apiKey: "AIzaSyB0mfNZJtuwNUudgM83nX7soxlsXdwfs3A",
+  authDomain: "comp2750-a3.firebaseapp.com",
+  projectId: "comp2750-a3",
+  storageBucket: "comp2750-a3.firebasestorage.app",
+  messagingSenderId: "671623399244",
+  appId: "1:671623399244:web:99e442a49e22d3090ff1e9",
+  measurementId: "G-6L51SFGBTD"
 };
 
 // Start Firebase
