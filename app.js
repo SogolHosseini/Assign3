@@ -19,10 +19,10 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 // Grab your HTML elements
-// const emailInput = document.getElementById("___");
-// const passwordInput = document.getElementById("___");
-// const signInButton = document.getElementById("___");
-// const messageArea = document.getElementById("___");
+const emailInput = document.getElementById("emailInput");
+const passwordInput = document.getElementById("passwordInput");
+const signInButton = document.getElementById("signInButton");
+const messageArea = document.getElementById("messageArea");
 
 // Sign in when the button is clicked
 signInButton.addEventListener("click", async function () {
