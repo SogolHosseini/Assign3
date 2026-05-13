@@ -353,6 +353,13 @@
                     allCards.push(col);
                 }
 
+                // If every item in Firestore belongs to the signed-in user, show empty state
+                if (allCards.length === 0) {
+                    emptyMsg.innerHTML = `<p style="font-size:2rem;">🛒</p><p>No other listings available yet.</p>`;
+                    emptyMsg.style.display = "block";
+                    return;
+                }
+
                 // Show the grid
                 container.style.display = "flex";
 
