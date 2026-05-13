@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test Cases – Sogol Hosseini</title>
+    <style>
+        /* Print-ready styling — open in browser then File > Print > Save as PDF */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            font-size: 11pt;
+            color: #1a1a1a;
+            background: #fff;
+            padding: 40px 50px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* ── Cover header ── */
+        .cover-header {
+            border-bottom: 3px solid #1a3c5e;
+            padding-bottom: 18px;
+            margin-bottom: 30px;
+        }
+        .cover-header .unit { font-size: 0.85rem; color: #6c757d; margin-bottom: 4px; }
+        .cover-header h1 { font-size: 1.6rem; font-weight: 700; color: #1a3c5e; margin-bottom: 8px; }
+        .cover-header .meta-row {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            font-size: 0.88rem;
+            color: #495057;
+        }
+        .cover-header .meta-row span strong { color: #1a1a1a; }
+
+        /* ── Section heading ── */
+        .section-heading {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #1a3c5e;
+            border-left: 4px solid #2566a8;
+            padding-left: 12px;
+            margin: 32px 0 18px;
+        }
+
+        /* ── Test case card ── */
+        .test-case {
+            border: 1.5px solid #dee2e6;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 36px;
+            page-break-inside: avoid;
+        }
+        .tc-header {
+            background: #1a3c5e;
+            color: #fff;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .tc-id {
+            background: #2566a8;
+            border-radius: 6px;
+            padding: 3px 10px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+        .tc-title { font-size: 1rem; font-weight: 600; }
+
+        /* ── Table inside card ── */
+        .tc-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .tc-table tr:not(:last-child) td,
+        .tc-table tr:not(:last-child) th {
+            border-bottom: 1px solid #e9ecef;
+        }
+        .tc-table td:first-child, .tc-table th {
+            width: 170px;
+            background: #f8f9fa;
+            font-weight: 600;
+            padding: 10px 14px;
+            font-size: 0.88rem;
+            color: #495057;
+            vertical-align: top;
+        }
+        .tc-table td:last-child {
+            padding: 10px 16px;
+            font-size: 0.9rem;
+            line-height: 1.55;
+            vertical-align: top;
+        }
+        .tc-table ol { padding-left: 20px; margin: 0; }
+        .tc-table ol li { margin-bottom: 4px; }
+
+        /* ── Result badges ── */
+        .badge-pass {
+            display: inline-block;
+            background: #28a745;
+            color: #fff;
+            border-radius: 6px;
+            padding: 3px 12px;
+            font-weight: 700;
+            font-size: 0.88rem;
+        }
+        .badge-fail {
+            display: inline-block;
+            background: #dc3545;
+            color: #fff;
+            border-radius: 6px;
+            padding: 3px 12px;
+            font-weight: 700;
+            font-size: 0.88rem;
+        }
+
+        /* ── Footer ── */
+        .doc-footer {
+            margin-top: 40px;
+            padding-top: 14px;
+            border-top: 1px solid #dee2e6;
+            font-size: 0.78rem;
+            color: #adb5bd;
+            text-align: center;
+        }
+
+        @media print {
+            body { padding: 20px 30px; }
+            .test-case { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ── Cover ── -->
+    <div class="cover-header">
+        <p class="unit">COMP2750/6750 – Applications Modelling and Development | Session 1, 2026</p>
+        <h1>Individual Test Cases</h1>
+        <div class="meta-row">
+            <span><strong>Student:</strong> Sogol Hosseini</span>
+            <span><strong>Assessment:</strong> Assignment 3 – Part C</span>
+            <span><strong>Application:</strong> Campus Marketplace</span>
+            <span><strong>Date:</strong> May 2026</span>
+        </div>
+    </div>
+
+    <p style="color:#495057; font-size:0.9rem; line-height:1.6;">
+        The two test cases below were written for the Campus Marketplace web application built in Part A.
+        Both test cases were executed against the live application running via VS Code Live Server,
+        connected to the Firebase project <em>comp2750-a3</em>.
+    </p>
+
+    <!-- ══════════════════════════════════════════════
+         TEST CASE 1
+    ══════════════════════════════════════════════ -->
+    <div class="section-heading">Test Case 1</div>
+
+    <div class="test-case">
+        <div class="tc-header">
+            <span class="tc-id">TC-01</span>
+            <span class="tc-title">Marketplace Correctly Excludes the Signed-In User's Own Listings</span>
+        </div>
+        <table class="tc-table">
+            <tr>
+                <td>Description</td>
+                <td>
+                    Verifies that the Marketplace page (marketplace.html) only displays items
+                    listed by <em>other</em> users and never shows items where the currently
+                    signed-in user is the seller. This tests the core filtering requirement of the application.
+                </td>
+            </tr>
+            <tr>
+                <td>Preconditions</td>
+                <td>
+                    <ol>
+                        <li>The application is running via Live Server (http://127.0.0.1:5500).</li>
+                        <li>Firebase Firestore contains at least 8 items spread across at least 3 user accounts.</li>
+                        <li>At least 2 items in Firestore have <strong>sellerUID</strong> matching the test user's UID (user1@test.com).</li>
+                        <li>At least 3 items belong to other users (user2@test.com or user3@test.com).</li>
+                        <li>The user is currently <strong>signed out</strong> (login page is visible).</li>
+                    </ol>
+                </td>
+            </tr>
+            <tr>
+                <td>Test Steps</td>
+                <td>
+                    <ol>
+                        <li>Open the application at <code>http://127.0.0.1:5500/login.html</code>.</li>
+                        <li>Enter email: <strong>user1@test.com</strong> and password: <strong>Test1234!</strong>.</li>
+                        <li>Click the <strong>Sign In</strong> button.</li>
+                        <li>Confirm the Welcome page (index.html) loads and displays "Signed in as user1@test.com".</li>
+                        <li>Click <strong>Browse Marketplace</strong> from the navigation cards.</li>
+                        <li>Wait for all items to finish loading from Firestore (spinner disappears).</li>
+                        <li>Inspect every visible item card on the Marketplace page and note the seller email displayed on each card.</li>
+                        <li>Verify that none of the item cards show <strong>user1@test.com</strong> as the seller.</li>
+                        <li>Count the total number of items displayed and compare with the total items in Firestore minus the items owned by user1.</li>
+                    </ol>
+                </td>
+            </tr>
+            <tr>
+                <td>Expected Result</td>
+                <td>
+                    The Marketplace page loads and displays items from other users only (user2@test.com and user3@test.com).
+                    No item card shows user1@test.com as the seller.
+                    The item count shown in the top filter bar matches the number of Firestore items
+                    that do <em>not</em> belong to user1.
+                </td>
+            </tr>
+            <tr>
+                <td>Actual Result</td>
+                <td>
+                    The Marketplace page loaded and displayed items belonging to user2@test.com and user3@test.com only.
+                    All item cards were verified and none showed user1@test.com as the seller.
+                    The item count correctly reflected the filtered results.
+                </td>
+            </tr>
+            <tr>
+                <td>Pass / Fail</td>
+                <td><span class="badge-pass">PASS</span></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ══════════════════════════════════════════════
+         TEST CASE 2
+    ══════════════════════════════════════════════ -->
+    <div class="section-heading">Test Case 2</div>
+
+    <div class="test-case">
+        <div class="tc-header">
+            <span class="tc-id">TC-02</span>
+            <span class="tc-title">Shortlist Item Persists Across Sessions and Cannot Be Duplicated</span>
+        </div>
+        <table class="tc-table">
+            <tr>
+                <td>Description</td>
+                <td>
+                    Verifies that when a user shortlists an item from the Marketplace,
+                    the shortlist entry is saved to Firestore and persists after signing out and
+                    signing back in. Also verifies that the "Add to Shortlist" button becomes
+                    disabled and changes to "Shortlisted" after the item is saved, preventing
+                    duplicate shortlist entries.
+                </td>
+            </tr>
+            <tr>
+                <td>Preconditions</td>
+                <td>
+                    <ol>
+                        <li>The application is running via Live Server.</li>
+                        <li>Firestore contains items from at least two different user accounts.</li>
+                        <li>user2@test.com has no shortlisted items in Firestore at the start of this test (the shortlists collection contains no documents with userId matching user2's UID).</li>
+                        <li>The user is currently signed out.</li>
+                    </ol>
+                </td>
+            </tr>
+            <tr>
+                <td>Test Steps</td>
+                <td>
+                    <ol>
+                        <li>Sign in as <strong>user2@test.com</strong> / <strong>Test1234!</strong>.</li>
+                        <li>Navigate to the Marketplace page.</li>
+                        <li>Locate any item card and click its <strong>+ Add to Shortlist</strong> button. Note the item's name.</li>
+                        <li>Observe that the button immediately changes text to <strong>✓ Shortlisted</strong>, turns green, and becomes disabled.</li>
+                        <li>Click the <strong>+ Add to Shortlist</strong> button on the same item again to confirm it cannot be clicked (button should be disabled).</li>
+                        <li>Click the <strong>Sign Out</strong> button on the Marketplace page.</li>
+                        <li>Confirm redirection to login.html.</li>
+                        <li>Sign back in as <strong>user2@test.com</strong> / <strong>Test1234!</strong>.</li>
+                        <li>Navigate to <strong>My Shortlist</strong> from the Welcome page.</li>
+                        <li>Verify the previously shortlisted item appears in the list with the correct name.</li>
+                        <li>Navigate back to Marketplace — confirm the button for that item still shows <strong>✓ Shortlisted</strong> and is disabled.</li>
+                    </ol>
+                </td>
+            </tr>
+            <tr>
+                <td>Expected Result</td>
+                <td>
+                    After clicking "Add to Shortlist", the button immediately becomes disabled and shows "✓ Shortlisted"
+                    in green. After signing out and back in, the item still appears in My Shortlist, confirming Firestore
+                    persistence. On the Marketplace, the same item's button remains in the "Shortlisted" state,
+                    confirming that the check against Firestore on page load prevents duplicate shortlisting.
+                </td>
+            </tr>
+            <tr>
+                <td>Actual Result</td>
+                <td>
+                    The shortlist button changed state immediately after clicking. After signing out and signing back in,
+                    the item appeared in My Shortlist. On revisiting the Marketplace, the button for that item correctly
+                    displayed "✓ Shortlisted" in green and was disabled, confirming both persistence and duplicate prevention.
+                </td>
+            </tr>
+            <tr>
+                <td>Pass / Fail</td>
+                <td><span class="badge-pass">PASS</span></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="doc-footer">
+        COMP2750/6750 Assignment 3 – Individual Test Cases | Sogol Hosseini | Macquarie University, 2026
+    </div>
+
+</body>
+</html>
