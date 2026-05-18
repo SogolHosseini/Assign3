@@ -58,7 +58,7 @@ file:// will not work due to CORS / module restrictions.
 
 ── Pages Summary ─────────────────────────────────────────────
 
-  login.html        Sign-in page (Firebase Authentication)
+  login.html        Sign-in page (Firebase Authentication - Alicia King)
   index.html        Welcome page – navigation hub (Sogol Hosseini)
   marketplace.html  Browse items from other users  (Sogol Hosseini)
   mylistings.html   View the signed-in user's own listings
