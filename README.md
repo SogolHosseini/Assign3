@@ -6,7 +6,7 @@ A web application built with HTML, CSS (Bootstrap 5), JavaScript, and Firebase (
 
 | File | Description | Author |
 |------|-------------|--------|
-| `login.html` | Sign-in page (Firebase Authentication) | |
+| `login.html` | Sign-in page (Firebase Authentication) | Alicia King|
 | `index.html` | Welcome page – navigation hub | Sogol Hosseini |
 | `marketplace.html` | Browse items from other users | Sogol Hosseini |
 | `mylistings.html` | View the signed-in user's own listings | |
@@ -26,3 +26,4 @@ A web application built with HTML, CSS (Bootstrap 5), JavaScript, and Firebase (
 
 - **Project ID:** `comp2750-a3`
 - Test user credentials and full Firestore data structure are documented in `README.txt`.
+- Test credentials is user MQ email and password: Test123!
