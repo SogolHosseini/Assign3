@@ -1,0 +1,360 @@
+/* ============================================================
+   styles.css - Campus Marketplace
+   Shared styles for all pages
+   ============================================================ */
+
+/* Body */
+body {
+    background-color: #f5f7fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Navbar */
+.top-navbar {
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.top-navbar img { height: 40px; }
+.nav-links { display: flex; align-items: center; gap: 12px; }
+
+.btn-home {
+    background: #1a3c5e;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 7px 16px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.15s;
+}
+.btn-home:hover { background: #255a8a; color: #fff; }
+
+.btn-signout {
+    border: 1.5px solid #dc3545;
+    color: #dc3545;
+    background: transparent;
+    border-radius: 8px;
+    padding: 6px 16px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+.btn-signout:hover { background: #dc3545; color: #fff; }
+
+/* Page headers - each page uses a different colour */
+.page-header {
+    background: linear-gradient(135deg, #1a3c5e, #2566a8);
+    color: #fff;
+    padding: 36px 24px 28px;
+    text-align: center;
+}
+.page-header-green {
+    background: linear-gradient(135deg, #1a6e2e, #38a169);
+    color: #fff;
+    padding: 36px 24px 28px;
+    text-align: center;
+}
+.page-header-amber {
+    background: linear-gradient(135deg, #7c4d0f, #e07b1a);
+    color: #fff;
+    padding: 36px 24px 28px;
+    text-align: center;
+}
+.page-header h2,
+.page-header-green h2,
+.page-header-amber h2 { font-weight: 700; margin-bottom: 4px; }
+.page-header p,
+.page-header-green p,
+.page-header-amber p  { opacity: 0.82; margin: 0; }
+
+/* Item cards */
+.items-section { padding: 32px 24px 60px; }
+
+.item-card {
+    border: none;
+    border-radius: 14px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
+    height: 100%;
+}
+.item-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.13);
+}
+.item-card .card-img-top {
+    height: 180px;
+    object-fit: cover;
+    background: #e9ecef;
+}
+.item-card .card-body {
+    display: flex;
+    flex-direction: column;
+    padding: 18px;
+}
+
+.item-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #1a3c5e;
+    margin-bottom: 4px;
+}
+.item-description {
+    font-size: 0.88rem;
+    color: #6c757d;
+    flex-grow: 1;
+    margin-bottom: 10px;
+}
+.item-price {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a6e2e;
+    margin-bottom: 4px;
+}
+.item-seller {
+    font-size: 0.8rem;
+    color: #adb5bd;
+    margin-bottom: 12px;
+}
+
+/* Category badges - blue for marketplace, green for my listings */
+.badge-category {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: #e3eeff;
+    color: #2566a8;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+.badge-category-green {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: #e2f5e8;
+    color: #1a6e2e;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+.my-listing-badge {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: #fff3cd;
+    color: #856404;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+/* Loading and empty state messages */
+.status-msg {
+    text-align: center;
+    padding: 60px 20px;
+    color: #6c757d;
+}
+.status-msg .spinner-border { margin-bottom: 14px; }
+
+/* Footer */
+.page-footer {
+    text-align: center;
+    padding: 20px;
+    color: #adb5bd;
+    font-size: 0.82rem;
+    border-top: 1px solid #e9ecef;
+}
+
+
+/* ============================================================
+   index.html - Welcome page
+   ============================================================ */
+
+.top-navbar .home-logo { height: 44px; }
+
+.hero-banner {
+    background: linear-gradient(135deg, #1a3c5e 0%, #2566a8 60%, #3d8bcd 100%);
+    color: #ffffff;
+    padding: 64px 24px 56px;
+    text-align: center;
+}
+.hero-banner h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.hero-banner .welcome-email {
+    font-size: 1.15rem;
+    opacity: 0.88;
+    margin-bottom: 6px;
+}
+.hero-banner .tagline {
+    font-size: 1rem;
+    opacity: 0.72;
+    margin: 0;
+}
+.hero-avatar {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin: 0 auto 18px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+.nav-cards-section { padding: 48px 24px 60px; }
+
+.nav-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+.nav-card {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+    height: 100%;
+}
+.nav-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14);
+}
+.nav-card .card-body {
+    padding: 36px 28px;
+    text-align: center;
+}
+.card-icon {
+    font-size: 3rem;
+    margin-bottom: 16px;
+    display: block;
+}
+.nav-card h5 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #1a3c5e;
+}
+.nav-card p {
+    color: #6c757d;
+    font-size: 0.92rem;
+    margin: 0;
+}
+.card-blue  { background: #e9f3fc; }
+.card-green { background: #e9f7ed; }
+.card-amber { background: #fdf5e6; }
+
+
+/* ============================================================
+   marketplace.html - Browse page
+   ============================================================ */
+
+.filter-bar {
+    background: #ffffff;
+    border-bottom: 1px solid #e9ecef;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.filter-bar label {
+    font-weight: 500;
+    margin: 0;
+    color: #495057;
+    font-size: 0.92rem;
+}
+.filter-select {
+    border: 1.5px solid #ced4da;
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.15s;
+}
+.filter-select:focus { border-color: #2566a8; }
+
+.btn-shortlist {
+    border: 1.5px solid #2566a8;
+    background: transparent;
+    color: #2566a8;
+    border-radius: 8px;
+    padding: 8px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    width: 100%;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+.btn-shortlist:hover:not(:disabled) {
+    background: #2566a8;
+    color: #fff;
+}
+.btn-shortlisted {
+    background: #28a745;
+    color: #fff;
+    border-color: #28a745;
+    cursor: default;
+}
+
+
+/* ============================================================
+   shortlist.html - My Shortlist page
+   ============================================================ */
+
+.shortlist-item {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07);
+    padding: 20px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+    transition: box-shadow 0.15s;
+}
+.shortlist-item:hover { box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12); }
+.shortlist-item-info { flex: 1; }
+.shortlist-item-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #1a3c5e;
+    margin-bottom: 4px;
+}
+.shortlist-item-meta {
+    font-size: 0.84rem;
+    color: #6c757d;
+}
+.shortlist-item-price {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1a6e2e;
+    white-space: nowrap;
+}
+.btn-remove {
+    background: transparent;
+    border: 1.5px solid #dc3545;
+    color: #dc3545;
+    border-radius: 8px;
+    padding: 7px 16px;
+    font-size: 0.86rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s, color 0.15s;
+}
+.btn-remove:hover { background: #dc3545; color: #fff; }

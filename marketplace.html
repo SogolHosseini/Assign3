@@ -5,191 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Campus Marketplace – Browse</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <style>
-        body {
-            background-color: #f5f7fa;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        /* ── Navbar ── */
-        .top-navbar {
-            background: #ffffff;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            padding: 12px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .top-navbar img { height: 40px; }
-        .nav-links { display: flex; align-items: center; gap: 12px; }
-        .btn-home {
-            background: #1a3c5e;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            padding: 7px 16px;
-            font-size: 0.88rem;
-            font-weight: 500;
-            text-decoration: none;
-            transition: background 0.15s;
-        }
-        .btn-home:hover { background: #255a8a; color: #fff; }
-        .btn-signout {
-            border: 1.5px solid #dc3545;
-            color: #dc3545;
-            background: transparent;
-            border-radius: 8px;
-            padding: 6px 16px;
-            font-size: 0.88rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background 0.15s, color 0.15s;
-        }
-        .btn-signout:hover { background: #dc3545; color: #fff; }
-
-        /* ── Page header ── */
-        .page-header {
-            background: linear-gradient(135deg, #1a3c5e, #2566a8);
-            color: #fff;
-            padding: 36px 24px 28px;
-            text-align: center;
-        }
-        .page-header h2 { font-weight: 700; margin-bottom: 4px; }
-        .page-header p  { opacity: 0.82; margin: 0; }
-
-        /* ── Filter bar ── */
-        .filter-bar {
-            background: #ffffff;
-            border-bottom: 1px solid #e9ecef;
-            padding: 14px 24px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .filter-bar label { font-weight: 500; margin: 0; color: #495057; font-size: 0.92rem; }
-        .filter-select {
-            border: 1.5px solid #ced4da;
-            border-radius: 8px;
-            padding: 6px 14px;
-            font-size: 0.9rem;
-            outline: none;
-            transition: border-color 0.15s;
-        }
-        .filter-select:focus { border-color: #2566a8; }
-
-        /* ── Main content ── */
-        .items-section { padding: 32px 24px 60px; }
-
-        /* ── Item cards ── */
-        .item-card {
-            border: none;
-            border-radius: 14px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            overflow: hidden;
-            height: 100%;
-        }
-        .item-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 22px rgba(0,0,0,0.13);
-        }
-        .item-card .card-img-top {
-            height: 180px;
-            object-fit: cover;
-            background: #e9ecef;
-        }
-        .item-card .card-body {
-            display: flex;
-            flex-direction: column;
-            padding: 18px;
-        }
-        .item-title {
-            font-size: 1.05rem;
-            font-weight: 650;
-            color: #1a3c5e;
-            margin-bottom: 4px;
-        }
-        .item-description {
-            font-size: 0.88rem;
-            color: #6c757d;
-            flex-grow: 1;
-            margin-bottom: 10px;
-            /* cap at three lines */
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        .item-price {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #1a6e2e;
-            margin-bottom: 4px;
-        }
-        .item-seller {
-            font-size: 0.8rem;
-            color: #adb5bd;
-            margin-bottom: 12px;
-        }
-        .badge-category {
-            font-size: 0.72rem;
-            font-weight: 600;
-            padding: 4px 10px;
-            border-radius: 20px;
-            background: #e3eeff;
-            color: #2566a8;
-            margin-bottom: 10px;
-            display: inline-block;
-        }
-
-        /* ── Shortlist button states ── */
-        .btn-shortlist {
-            border: 1.5px solid #2566a8;
-            background: transparent;
-            color: #2566a8;
-            border-radius: 8px;
-            padding: 8px;
-            font-size: 0.88rem;
-            font-weight: 500;
-            width: 100%;
-            cursor: pointer;
-            transition: background 0.15s, color 0.15s;
-        }
-        .btn-shortlist:hover:not(:disabled) {
-            background: #2566a8;
-            color: #fff;
-        }
-        .btn-shortlisted {
-            background: #28a745;
-            color: #fff;
-            border-color: #28a745;
-            cursor: default;
-        }
-
-        /* ── Loading / empty states ── */
-        .status-msg {
-            text-align: center;
-            padding: 60px 20px;
-            color: #6c757d;
-        }
-        .status-msg .spinner-border { margin-bottom: 14px; }
-
-        /* ── Footer ── */
-        .page-footer {
-            text-align: center;
-            padding: 20px;
-            color: #adb5bd;
-            font-size: 0.82rem;
-            border-top: 1px solid #e9ecef;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-    <!-- ── Navbar ── -->
+    <!-- Navbar -->
     <nav class="top-navbar">
         <a href="index.html">
             <img src="campus_marketplace_logo.png" alt="Campus Marketplace logo" />
@@ -200,13 +20,13 @@
         </div>
     </nav>
 
-    <!-- ── Page header ── -->
+    <!-- Page header -->
     <div class="page-header">
         <h2>🛒 Browse Marketplace</h2>
         <p>Items listed by other Macquarie students</p>
     </div>
 
-    <!-- ── Category filter ── -->
+    <!-- Category filter -->
     <div class="filter-bar">
         <label for="categoryFilter">Filter by category:</label>
         <select id="categoryFilter" class="filter-select">
@@ -214,27 +34,21 @@
             <option value="Textbooks">Textbooks</option>
             <option value="Electronics">Electronics</option>
             <option value="Furniture">Furniture</option>
-            <option value="Clothing">Clothing</option>
-            <option value="Sports">Sports</option>
-            <option value="Other">Other</option>
         </select>
         <span id="itemCount" class="text-muted ms-auto" style="font-size:0.88rem;"></span>
     </div>
 
-    <!-- ── Items grid ── -->
+    <!-- Items grid -->
     <div class="items-section">
         <div class="container-fluid">
 
-            <!-- Loading spinner shown while Firestore data loads -->
             <div id="loadingMsg" class="status-msg">
                 <div class="spinner-border text-primary" role="status"></div>
-                <p>Loading listings from Firestore…</p>
+                <p>Loading listings...</p>
             </div>
 
-            <!-- Items are injected here by JavaScript -->
             <div id="itemsContainer" class="row g-4" style="display:none;"></div>
 
-            <!-- Shown if no items match the filter -->
             <div id="emptyMsg" class="status-msg" style="display:none;">
                 <p style="font-size:2rem;">🔍</p>
                 <p>No items found in this category.</p>
@@ -247,196 +61,7 @@
         Campus Marketplace &copy; 2026 · Macquarie University
     </footer>
 
-    <!-- ── Firebase script ── -->
-    <script type="module">
-        import { initializeApp }    from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut }
-            from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
-        import { getFirestore, collection, getDocs, doc, setDoc, getDoc }
-            from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
-
-        // Firebase project configuration
-        const firebaseConfig = {
-            apiKey:            "AIzaSyB0mfNZJtuwNUudgM83nX7soxlsXdwfs3A",
-            authDomain:        "comp2750-a3.firebaseapp.com",
-            projectId:         "comp2750-a3",
-            storageBucket:     "comp2750-a3.firebasestorage.app",
-            messagingSenderId: "671623399244",
-            appId:             "1:671623399244:web:99e442a49e22d3090ff1e9"
-        };
-
-        const app  = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db   = getFirestore(app);
-
-        // All loaded item cards (so we can re-filter without another Firestore call)
-        let allCards = [];
-
-        // ── Auth check ──
-        onAuthStateChanged(auth, async (user) => {
-            if (!user) {
-                window.location.href = "login.html";
-                return;
-            }
-            await loadItems(user);
-        });
-
-        // ── Load items from Firestore and build cards ──
-        async function loadItems(user) {
-            const container   = document.getElementById("itemsContainer");
-            const loadingMsg  = document.getElementById("loadingMsg");
-            const emptyMsg    = document.getElementById("emptyMsg");
-
-            try {
-                const snapshot = await getDocs(collection(db, "items"));
-
-                // Hide the spinner once data arrives
-                loadingMsg.style.display = "none";
-
-                if (snapshot.empty) {
-                    emptyMsg.style.display = "block";
-                    return;
-                }
-
-                // Build a card for every item that belongs to someone else
-                for (const docSnap of snapshot.docs) {
-                    const item   = docSnap.data();
-                    const itemId = docSnap.id;
-
-                    // Skip the signed-in user's own listings
-                    if (item.sellerUID === user.uid) continue;
-
-                    // Check whether this item is already in the user's shortlist
-                    const shortlistRef  = doc(db, "shortlists", `${user.uid}_${itemId}`);
-                    const shortlistSnap = await getDoc(shortlistRef);
-                    const isShortlisted = shortlistSnap.exists();
-
-                    // Format price — show "Trade" if the item is offered for trading
-                    const priceLabel = (item.price === "Trade" || item.price === 0 || item.price === "")
-                        ? "Trade"
-                        : `$${item.price}`;
-
-                    // Use a CSS gradient placeholder if no image is provided
-                    const imgSrc = item.imageURL || "";
-
-                    // Create the card column
-                    const col = document.createElement("div");
-                    col.className          = "col-xl-3 col-lg-4 col-md-6 item-col";
-                    col.dataset.category   = item.category || "Other";
-
-                    col.innerHTML = `
-                        <div class="card item-card">
-                            <img
-                                src="${imgSrc}"
-                                class="card-img-top"
-                                alt="${item.name}"
-                                onerror="this.style.background='#dde3ea'; this.removeAttribute('src');"
-                            />
-                            <div class="card-body">
-                                <span class="badge-category">${item.category || "Other"}</span>
-                                <p class="item-title">${item.name}</p>
-                                <p class="item-description">${item.description}</p>
-                                <p class="item-price">${priceLabel}</p>
-                                <p class="item-seller">Seller: ${item.sellerEmail}</p>
-                                <button
-                                    class="btn-shortlist ${isShortlisted ? "btn-shortlisted" : ""}"
-                                    data-item-id="${itemId}"
-                                    ${isShortlisted ? "disabled" : ""}
-                                >
-                                    ${isShortlisted ? "✓ Shortlisted" : "+ Add to Shortlist"}
-                                </button>
-                            </div>
-                        </div>
-                    `;
-
-                    container.appendChild(col);
-                    allCards.push(col);
-                }
-
-                // If every item in Firestore belongs to the signed-in user, show empty state
-                if (allCards.length === 0) {
-                    emptyMsg.innerHTML = `<p style="font-size:2rem;">🛒</p><p>No other listings available yet.</p>`;
-                    emptyMsg.style.display = "block";
-                    return;
-                }
-
-                // Show the grid
-                container.style.display = "flex";
-
-                // Wire up shortlist buttons after all cards are in the DOM
-                attachShortlistHandlers(user, db);
-
-                // Update the item count label
-                updateCount();
-
-            } catch (err) {
-                loadingMsg.innerHTML = `<p class="text-danger">Failed to load items. Please refresh the page.</p>`;
-                console.error("Firestore error:", err);
-            }
-        }
-
-        // ── Shortlist button click handler ──
-        function attachShortlistHandlers(user, db) {
-            document.querySelectorAll(".btn-shortlist:not([disabled])").forEach(btn => {
-                btn.addEventListener("click", async () => {
-                    const itemId = btn.dataset.itemId;
-
-                    // Disable immediately to prevent double-clicks
-                    btn.disabled = true;
-                    btn.textContent = "Saving…";
-
-                    try {
-                        // Write a shortlist document with a composite key
-                        await setDoc(doc(db, "shortlists", `${user.uid}_${itemId}`), {
-                            userId:  user.uid,
-                            itemId:  itemId,
-                            addedAt: new Date().toISOString()
-                        });
-
-                        // Update button to "Shortlisted" state
-                        btn.textContent  = "✓ Shortlisted";
-                        btn.className    = "btn-shortlist btn-shortlisted";
-
-                    } catch (err) {
-                        btn.disabled    = false;
-                        btn.textContent = "+ Add to Shortlist";
-                        alert("Could not save to shortlist. Please try again.");
-                        console.error("Shortlist error:", err);
-                    }
-                });
-            });
-        }
-
-        // ── Category filter ──
-        document.getElementById("categoryFilter").addEventListener("change", function () {
-            const selected = this.value;
-            allCards.forEach(col => {
-                if (selected === "all" || col.dataset.category === selected) {
-                    col.style.display = "";
-                } else {
-                    col.style.display = "none";
-                }
-            });
-            updateCount();
-
-            // Show "no items" message if everything is hidden
-            const visible = allCards.filter(c => c.style.display !== "none").length;
-            document.getElementById("emptyMsg").style.display = visible === 0 ? "block" : "none";
-        });
-
-        // Update the item count label
-        function updateCount() {
-            const visible = allCards.filter(c => c.style.display !== "none").length;
-            document.getElementById("itemCount").textContent =
-                visible === 1 ? "1 item" : `${visible} items`;
-        }
-
-        // ── Sign out ──
-        document.getElementById("signOutBtn").addEventListener("click", async () => {
-            await signOut(auth);
-            window.location.href = "login.html";
-        });
-    </script>
+    <script src="marketplace.js" type="module"></script>
 
 </body>
 </html>

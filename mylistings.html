@@ -5,117 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Campus Marketplace – My Listings</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <style>
-        body {
-            background-color: #f5f7fa;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        /* ── Navbar ── */
-        .top-navbar {
-            background: #ffffff;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            padding: 12px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .top-navbar img { height: 40px; }
-        .nav-links { display: flex; align-items: center; gap: 12px; }
-        .btn-home {
-            background: #1a3c5e;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            padding: 7px 16px;
-            font-size: 0.88rem;
-            font-weight: 500;
-            text-decoration: none;
-            transition: background 0.15s;
-        }
-        .btn-home:hover { background: #255a8a; color: #fff; }
-        .btn-signout {
-            border: 1.5px solid #dc3545;
-            color: #dc3545;
-            background: transparent;
-            border-radius: 8px;
-            padding: 6px 16px;
-            font-size: 0.88rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background 0.15s, color 0.15s;
-        }
-        .btn-signout:hover { background: #dc3545; color: #fff; }
-
-        /* ── Page header ── */
-        .page-header {
-            background: linear-gradient(135deg, #1a6e2e, #38a169);
-            color: #fff;
-            padding: 36px 24px 28px;
-            text-align: center;
-        }
-        .page-header h2 { font-weight: 700; margin-bottom: 4px; }
-        .page-header p  { opacity: 0.82; margin: 0; }
-
-        /* ── Main content ── */
-        .items-section { padding: 32px 24px 60px; }
-
-        /* ── Item cards ── */
-        .item-card {
-            border: none;
-            border-radius: 14px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-            overflow: hidden;
-            height: 100%;
-        }
-        .item-card .card-img-top {
-            height: 180px;
-            object-fit: cover;
-            background: #e9ecef;
-        }
-        .item-card .card-body {
-            display: flex;
-            flex-direction: column;
-            padding: 18px;
-        }
-        .item-title       { font-size: 1.05rem; font-weight: 650; color: #1a3c5e; margin-bottom: 4px; }
-        .item-description { font-size: 0.88rem; color: #6c757d; flex-grow: 1; margin-bottom: 10px; }
-        .item-price       { font-size: 1.1rem; font-weight: 700; color: #1a6e2e; margin-bottom: 4px; }
-        .badge-category {
-            font-size: 0.72rem; font-weight: 600;
-            padding: 4px 10px; border-radius: 20px;
-            background: #e2f5e8; color: #1a6e2e;
-            margin-bottom: 10px; display: inline-block;
-        }
-        .my-listing-badge {
-            font-size: 0.72rem; font-weight: 600;
-            padding: 4px 10px; border-radius: 20px;
-            background: #fff3cd; color: #856404;
-            display: inline-block; margin-bottom: 10px;
-        }
-
-        /* ── Status messages ── */
-        .status-msg {
-            text-align: center;
-            padding: 60px 20px;
-            color: #6c757d;
-        }
-
-        /* ── Footer ── */
-        .page-footer {
-            text-align: center;
-            padding: 20px;
-            color: #adb5bd;
-            font-size: 0.82rem;
-            border-top: 1px solid #e9ecef;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-    <!-- ── Navbar ── -->
+    <!-- Navbar -->
     <nav class="top-navbar">
         <a href="index.html">
             <img src="campus_marketplace_logo.png" alt="Campus Marketplace logo" />
@@ -126,13 +20,13 @@
         </div>
     </nav>
 
-    <!-- ── Page header ── -->
-    <div class="page-header">
+    <!-- Page header -->
+    <div class="page-header-green">
         <h2>📦 My Listings</h2>
         <p>Items you have listed on the marketplace</p>
     </div>
 
-    <!-- ── Items grid ── -->
+    <!-- Items grid -->
     <div class="items-section">
         <div class="container-fluid">
 
@@ -156,7 +50,7 @@
         Campus Marketplace &copy; 2026 · Macquarie University
     </footer>
 
-    <!-- ── Firebase script ── -->
+    <!-- Firebase script -->
     <script type="module">
         import { initializeApp }    from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut }
@@ -164,7 +58,7 @@
         import { getFirestore, collection, query, where, getDocs }
             from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
-        // Firebase project configuration
+        // Firebase project config
         const firebaseConfig = {
             apiKey:            "AIzaSyB0mfNZJtuwNUudgM83nX7soxlsXdwfs3A",
             authDomain:        "comp2750-a3.firebaseapp.com",
@@ -174,12 +68,13 @@
             appId:             "1:671623399244:web:99e442a49e22d3090ff1e9"
         };
 
+        // start Firebase
         const app  = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db   = getFirestore(app);
 
-        // Redirect if not signed in
-        onAuthStateChanged(auth, async (user) => {
+        // check if user is logged in - redirect to login if not
+        onAuthStateChanged(auth, async function(user) {
             if (!user) {
                 window.location.href = "login.html";
                 return;
@@ -187,14 +82,14 @@
             await loadMyListings(user);
         });
 
-        // Load only items that belong to the signed-in user
+        // load items that belong to the current user
         async function loadMyListings(user) {
             const container  = document.getElementById("itemsContainer");
             const loadingMsg = document.getElementById("loadingMsg");
             const emptyMsg   = document.getElementById("emptyMsg");
 
             try {
-                // Query Firestore for items where sellerUID matches the current user
+                // query for items where sellerUID matches the current user
                 const q        = query(collection(db, "items"), where("sellerUID", "==", user.uid));
                 const snapshot = await getDocs(q);
 
@@ -205,11 +100,11 @@
                     return;
                 }
 
-                snapshot.forEach(docSnap => {
-                    const item  = docSnap.data();
+                snapshot.forEach(function(docSnap) {
+                    const item = docSnap.data();
                     const priceLabel = (item.price === "Trade" || item.price === 0 || item.price === "")
                         ? "Trade"
-                        : `$${item.price}`;
+                        : "$" + item.price;
 
                     const col = document.createElement("div");
                     col.className = "col-xl-3 col-lg-4 col-md-6";
@@ -222,7 +117,7 @@
                                 onerror="this.style.background='#dde3ea'; this.removeAttribute('src');"
                             />
                             <div class="card-body">
-                                <span class="badge-category">${item.category || "Other"}</span>
+                                <span class="badge-category-green">${item.category || "Other"}</span>
                                 <span class="my-listing-badge">Your listing</span>
                                 <p class="item-title">${item.name}</p>
                                 <p class="item-description">${item.description}</p>
@@ -236,13 +131,13 @@
                 container.style.display = "flex";
 
             } catch (err) {
-                loadingMsg.innerHTML = `<p class="text-danger">Failed to load your listings. Please refresh.</p>`;
-                console.error("Firestore error:", err);
+                loadingMsg.innerHTML = `<p class="text-danger">Error loading your listings. Please refresh.</p>`;
+                console.error(err);
             }
         }
 
-        // Sign out
-        document.getElementById("signOutBtn").addEventListener("click", async () => {
+        // sign out button
+        document.getElementById("signOutBtn").addEventListener("click", async function() {
             await signOut(auth);
             window.location.href = "login.html";
         });
