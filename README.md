@@ -9,8 +9,8 @@ A web application built with HTML, CSS (Bootstrap 5), JavaScript, and Firebase (
 | `login.html` | Sign-in page (Firebase Authentication) | Alicia King|
 | `index.html` | Welcome page – navigation hub | Sogol Hosseini |
 | `marketplace.html` | Browse items from other users | Sogol Hosseini |
-| `mylistings.html` | View the signed-in user's own listings | |
-| `shortlist.html` | View and manage shortlisted items | |
+| `mylistings.html` | View the signed-in user's own listings | Aliya Ray |
+| `shortlist.html` | View and manage shortlisted items | Aliya Ray |
 
 ## How to Run
 
