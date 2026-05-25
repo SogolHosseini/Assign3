@@ -118,7 +118,7 @@ onAuthStateChanged(auth, function (user) {
         itemsContainer.innerHTML = items.map(item => `
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="card h-100 shadow-sm">
-                    <img src= "${item.listing_image}" class="card-img-top" alt="${item.listing_title}">
+                    <img src= "${item.listing_image}" class="card-img-top" alt="${item.listing_title}" />
                     <div class="card-body">
                         <h5 class="card-title">${item.listing_title}</h5>
                         <p class="card-text text-muted">${item.listing_category}</p>
@@ -132,4 +132,67 @@ onAuthStateChanged(auth, function (user) {
         `).join("");
             }
 
+}
+//  mylistings.html
+const myListingsContainer = document.getElementById("myListingsContainer");
+
+if (myListingsContainer) {
+
+    const loadingMsg = document.getElementById("loadingMsg");
+    const emptyMsg = document.getElementById("emptyMsg");
+
+    onAuthStateChanged(auth, function (user) {
+
+        if (!user) {
+            window.location.href = "login.html";
+            return;
+        }
+
+        loadMyListings(user);
+    });
+
+    async function loadMyListings(user) {
+
+        const snapshot = await getDocs(collection(db, "Listings"));
+
+        const allItems = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        const myItems = allItems.filter(item =>
+            item.listing_owner === user.email
+        );
+
+        renderMyListings(myItems);
+    }
+
+    function renderMyListings(items) {
+
+        loadingMsg.style.display = "none";
+
+        if (items.length === 0) {
+            emptyMsg.style.display = "block";
+            myListingsContainer.style.display = "none";
+            return;
+        }
+
+        emptyMsg.style.display = "none";
+        myListingsContainer.style.display = "flex";
+
+        myListingsContainer.innerHTML = items.map(item => `
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="card h-100 shadow-sm">
+                    <img src="${item.listing_image}" class="card-img-top" />
+                    <div class="card-body">
+                        <h5 class="card-title">${item.listing_title}</h5>
+                        <p class="card-text text-muted">${item.listing_category}</p>
+                        <p class="card-text"> <small>Price: ${item.listing_price}</small> </p>
+                        <p class="card-text"> <small>Description: ${item.listing_description}</small> </p
+                        <p class="card-text"> <small>Condition: ${item.listing_condition}</small> </p>
+                    </div>
+                </div>
+            </div>
+        `).join("");
+    }
 }
