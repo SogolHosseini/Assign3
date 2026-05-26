@@ -26,4 +26,4 @@ A web application built with HTML, CSS (Bootstrap 5), JavaScript, and Firebase (
 
 - **Project ID:** `comp2750-a3`
 - Test user credentials and full Firestore data structure are documented in `README.txt`.
-- Test credentials is user MQ email and password: Test123!
+- Test credentials is user MQ email (eg. alicia.king2@students.mq.edu.au) and password: Test123!
