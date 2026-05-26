@@ -76,16 +76,13 @@ onAuthStateChanged(auth, function (user) {
     }
 });
 
+// Signout Button
     signOutButton.addEventListener("click", async function () {
-        try {
-            await signOut(auth);
-            window.location.href = "login.html";
-        } catch (error) {
-            console.error("Sign out failed:", error);
-            alert("Sign out failed. Please try again.");
-        }
-    });
+        await signOut(auth);
+        window.location.href = "login.html";
+        });
 
+// Category Filter
     categoryFilter.addEventListener("change", function () {
         const selected = categoryFilter.value;
         const filtered = selected === "all"
@@ -97,14 +94,21 @@ onAuthStateChanged(auth, function (user) {
     // Fetch listings from Firestore
     async function loadListings(user) {
         const snapshot = await getDocs(collection(db, "Listings"));
+        const shortlistSnapshot = await getDocs(
+            query(collection(db, "Shortlist"), where("userId", "==", user.email))
+        );
+        const shortlistedIds = [];
+        shortlistSnapshot.forEach(docSnap =>{
+            shortlistedIds.push(docSnap.data().listingId);
+        });
+        
         allItems = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
-        .filter(item=> item.listing_owner !== user.email);
-        renderItems(allItems);
+            .filter(item=> item.listing_owner !== user.email);
+        renderItems(allItems, shortlistedIds, user);
     }
 
-    function renderItems(items) {
+    function renderItems(items, shortlistedIds, user) {
         loadingMsg.style.display = "none";
-
         if (items.length === 0) {
             itemsContainer.style.display = "none";
             emptyMsg.style.display = "block";
@@ -116,10 +120,12 @@ onAuthStateChanged(auth, function (user) {
         itemsContainer.style.display = "flex";
         itemCount.textContent = items.length + " item(s) found";
 
-        itemsContainer.innerHTML = items.map(item => `
+        itemsContainer.innerHTML = items.map(item => {
+            const alreadyShortlisted = shortlistedIds.includes(item.id);
+            return `
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="card h-100 shadow-sm">
-                    <img src= "${item.listing_image}" class="card-img-top" alt="${item.listing_title}" />
+                    <img src= "${item.listing_image}" class="card-img-top" />
                     <div class="card-body">
                         <h5 class="card-title">${item.listing_title}</h5>
                         <p class="card-text text-muted">${item.listing_category}</p>
@@ -128,11 +134,32 @@ onAuthStateChanged(auth, function (user) {
                         <p class="card-text"><small>${item.listing_description}</small></p>
                         <p class="card-text"><small>Condition: ${item.listing_condition}</small></p>
                         <p class="card-text"><small>Listed by: ${item.listing_owner}</small></p>
+                        
+                        <button
+                            class="btn ${alreadyShortlisted ? "btn-success" : "btn-primary"} shortlist-btn"
+                            data-id="${item.id}" ${alreadyShortlisted ? "disabled" : ""} >
+                            ${alreadyShortlisted ? "Shortlisted" : "Add to Shortlist"} </button>
                     </div>
                 </div>
             </div>
-        `).join("");
-            }
+        `;
+    }).join("");
+    attachShortlistHandlers(user);
+}
+// shortlist button
+function attachShortlistHandlers(user){
+    const buttons = document.querySelectorAll(".shortlist-btn");
+    buttons.forEach(button=> {
+        button.addEventListener("click", async function(){
+            const listingId = button.getAttribute("data-id");
+            await addDoc(collection(db, "Shortlist"), {
+            userId: user.email,
+            listingId: listingId
+        });
+        loadListings(user);
+    });
+});
+}
 
 }
 //  mylistings.html
