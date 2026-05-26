@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged }
     from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
-import { getFirestore, collection, getDocs }
+import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc, query, where }
     from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
 // Config from the Firebase Console
@@ -123,6 +123,7 @@ onAuthStateChanged(auth, function (user) {
                         <h5 class="card-title">${item.listing_title}</h5>
                         <p class="card-text text-muted">${item.listing_category}</p>
                         <p class="card-text">${item.listing_price}</p>
+                        <p class="card-text">${item.listing_availability ? "Available" : "Not available"}</p>
                         <p class="card-text"><small>${item.listing_description}</small></p>
                         <p class="card-text"><small>Condition: ${item.listing_condition}</small></p>
                         <p class="card-text"><small>Listed by: ${item.listing_owner}</small></p>
@@ -188,6 +189,7 @@ if (myListingsContainer) {
                         <h5 class="card-title">${item.listing_title}</h5>
                         <p class="card-text text-muted">${item.listing_category}</p>
                         <p class="card-text"> <small>Price: ${item.listing_price}</small> </p>
+                        <p class="card-text">${item.listing_availability ? "Available" : "Not available"}</p>
                         <p class="card-text"> <small>Description: ${item.listing_description}</small> </p
                         <p class="card-text"> <small>Condition: ${item.listing_condition}</small> </p>
                     </div>
@@ -195,4 +197,86 @@ if (myListingsContainer) {
             </div>
         `).join("");
     }
+}
+
+// shortlist.html
+const myShortlistContainer = document.getElementById("myShortlistContainer");
+
+if (myShortlistContainer){
+    const loadingMsg = document.getElementById("loadingMsg");
+    const emptyMsg = document.getElementById("emptyMsg");
+
+    onAuthStateChanged(auth, function (user){
+        if(user){
+            loadShortlist(user);
+        } else {
+            window.location.href = "login.html";
+        }
+    });
+    async function loadShortlist(user){
+        const shortlistQuery = query(
+            collection(db, "Shortlist"),
+            where("userId", "==", user.email)
+        );
+        const shortlistSnapshot =await getDocs(shortlistQuery);
+        const listingsSnapshot = await getDocs(collection(db, "Listings"));
+        const allListings = listingsSnapshot.docs.map(doc=> ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        const shortlistItems = [];
+        shortlistSnapshot.forEach(function (docSnapshot){
+            const shortlist = docSnapshot.data();
+            const matchingListing = allListings.find(
+                listing=>listing.id === shortlist.listingId
+            );
+            if (matchingListing){
+                shortlistItems.push({
+                    shortlistId: docSnapshot.id,
+                    ...matchingListing
+                });
+            }
+        });
+        renderShortlist(shortlistItems);
+    }
+function renderShortlist(items) {
+    loadingMsg.style.display="none";
+    if (items.length===0) {
+        emptyMsg.style.display ="block";
+        myShortlistContainer.style.display = "none";
+        return;
+    }
+    emptyMsg.style.display = "none";
+    myShortlistContainer.style.display = "flex";
+
+    myShortlistContainer.innerHTML = items.map(item =>`
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class ="card h-100 shadow-sm">
+                <img src="${item.listing_image}" class="card-img-top" />
+                <div class="card-body">
+                    <h5 class="card-title">
+                        ${item.listing_title}</h5>
+                    <p class="card-text">
+                        ${item.listing_price}</p>
+                    <button 
+                        class="btn btn-danger btn-sm remove-btn"
+                        data-id="${item.shortlistId}">
+                    Remove </button>
+                </div>
+            </div>
+        </div>      
+        `).join("");
+        attachRemoveHandlers();
+}
+function attachRemoveHandlers(){
+    const removeButtons = document.querySelectorAll(".remove-btn");
+    removeButtons.forEach(function (button) {
+        button.addEventListener("click", async function (){
+            const shortlistId = button.getAttribute("data-id");
+            await deleteDoc(doc(db, "Shortlist", shortlistId));
+        loadShortlist(auth.currentUser);
+    });
+});
+}
 }
