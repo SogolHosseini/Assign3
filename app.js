@@ -70,7 +70,7 @@ if (itemsContainer) {
 onAuthStateChanged(auth, function (user) {
     if (user) {
         if (userEmail) userEmail.textContent = user.email;  
-        loadListings();
+        loadListings(user);
     } else {
         window.location.href = "login.html";
     }
@@ -95,9 +95,10 @@ onAuthStateChanged(auth, function (user) {
     });
 
     // Fetch listings from Firestore
-    async function loadListings() {
+    async function loadListings(user) {
         const snapshot = await getDocs(collection(db, "Listings"));
-        allItems = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        allItems = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+        .filter(item=> item.listing_owner !== user.email);
         renderItems(allItems);
     }
 
