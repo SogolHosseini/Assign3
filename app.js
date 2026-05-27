@@ -30,8 +30,14 @@ const itemsContainer = document.getElementById("itemsContainer");
 const myListingsContainer = document.getElementById("myListingsContainer");
 const myShortlistContainer = document.getElementById("myShortlistContainer");
 
+let allItems = [];
+let allShortlistedIds = [];
+let currentUser = null;
+
 onAuthStateChanged(auth, function (user) {
     if (user) {
+
+        currentUser = user;
         if (userEmail) userEmail.textContent = user.email;
         if (itemsContainer) loadListings(user);
         if (myListingsContainer) loadMyListings(user);
@@ -91,14 +97,13 @@ if (signInButton) {
 
 if (itemsContainer) {
     const categoryFilter = document.getElementById("categoryFilter");
-    let allItems = [];
 
     categoryFilter.addEventListener("change", function () {
         const selected = categoryFilter.value;
         const filtered = selected === "all"
             ? allItems
             : allItems.filter(item => item.listing_category === selected);
-        renderItems(filtered, [], null);
+        renderItems(filtered, allShortlistedIds, currentUser);
     });
 }
 
@@ -112,18 +117,26 @@ async function loadListings(user) {
         query(collection(db, "Shortlist"), where("userId", "==", user.email))
     );
 
-    const shortlistedIds = [];
+    allShortlistedIds = [];
     shortlistSnapshot.forEach(docSnap => {
-        shortlistedIds.push(docSnap.data().listingId);
+        allShortlistedIds.push(docSnap.data().listingId);
     });
 
-    const allItems = snapshot.docs
+    allItems = snapshot.docs
         .map(doc => ({ id: doc.id, ...doc.data() }))
         .filter(item => item.listing_owner !== user.email);
 
+    renderItems(allItems, allShortlistedIds, user);
+}
+
+function renderItems(items, shortlistedIds, user){
+    const loadingMsg = document.getElementById("loadingMsg");
+    const emptyMsg = document.getElementById("emptyMsg");
+    const itemCount = document.getElementById("itemCount");
+    
     loadingMsg.style.display = "none";
 
-    if (allItems.length === 0) {
+    if (items.length === 0) {
         itemsContainer.style.display = "none";
         emptyMsg.style.display = "block";
         itemCount.textContent = "";
@@ -132,9 +145,9 @@ async function loadListings(user) {
 
     emptyMsg.style.display = "none";
     itemsContainer.style.display = "flex";
-    itemCount.textContent = allItems.length + " item(s) found";
+    itemCount.textContent = items.length + " item(s) found";
 
-    itemsContainer.innerHTML = allItems.map(item => {
+    itemsContainer.innerHTML = items.map(item => {
         const alreadyShortlisted = shortlistedIds.includes(item.id);
         return `
             <div class="col-sm-6 col-md-4 col-lg-3">
@@ -284,3 +297,4 @@ function attachRemoveHandlers(user) {
         });
     });
 }
+
